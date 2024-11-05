@@ -3,13 +3,13 @@ import NavItem from "./NavItem";
 
 export default function Sidebar() {
     return (
-        <nav className="w-[10vw] h-[90vh] bg-orange-200 flex flex-col items-center py-20">
-            <NavItem icon={<LuStore className="text-4x1"/>} path="/dashboard" />
-            <LuWheat className="text-4x1" />
-            <LuTruck className="text-4x1" />
-            <LuUser className="text-4x1" />
-            <LuUsers className="text-4x1" />
-
+        <nav className="w-[10vw] h-[90vh] bg-orange-200 flex flex-col items-center py-20 justify-center gap-5">
+            <NavItem icon={<LuStore className="text-4xl"/>} path="/dashboard"/>
+            <NavItem icon={<LuTruck className="text-4xl"/>} path="/dashboard/providers"/>
+            <NavItem icon={<LuWheat className="text-4xl"/>} path="/dashboard/products"/>
+            <NavItem icon={<LuUser className="text-4xl"/>} path="/dashboard/managers"/>
+            <NavItem icon={<LuUsers className="text-4xl"/>} path="/dashboard/employees"/>
         </nav>
-    )
+    );
 }
+
