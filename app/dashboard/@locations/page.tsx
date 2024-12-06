@@ -1,17 +1,19 @@
 import axios from "axios";
 import { cookies } from "next/headers";
-import { TOKEN_NAME } from "@/constants"
+import { API_URL, TOKEN_NAME } from "@/constants"
 import { Location } from "@/entities";
 import { Select } from "@nextui-org/react";
 import SelectLocation from "./_components/SelectLocation";
 import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import LocationCard from "./_components/LocationCard";
+import FormNewLocation from "./_components/FormNewLocation";
+import DeleteLocationButton from "./_components/DeleteLocationButton";
+import { authHeaders } from "@/helpers/authHeaders";
 
     const LocationsPage = async ({searchParams}: { searchParams: { [key: string]: string | string[] | undefined }; }) => {
-    const userCookies = cookies()
-    const token = userCookies.get(TOKEN_NAME)?.value
-    let { data } = await axios.get<Location[]>("http://127.0.0.1:4000/locations", {
+    let { data } = await axios.get<Location[]>(`${API_URL}/locations`, {
         headers: {
-            Authorization: `Bearer ${token}`
+            ...authHeaders()
         }
     })
     data = [
@@ -29,8 +31,16 @@ import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.s
                 <div className="w-1/2 my-10">
                     <SelectLocation locations={data} store={searchParams?.store}/>
                 </div>
+                <div className="w-8/12">
+                    <LocationCard store = {searchParams.store}/>
+                </div>
+                <div className="w-6/12">
+                <FormNewLocation store={searchParams.store}/>
+                </div>
+                <DeleteLocationButton store={searchParams.store}/>
             </div>
-        </div>)
+        </div>
+        );
 }
 
 export default LocationsPage;
